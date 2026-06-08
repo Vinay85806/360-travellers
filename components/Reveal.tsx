@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type JSX } from "react"; // Added type JSX
 
 type RevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof JSX.IntrinsicElements; // This will now be recognized
 };
+// ... rest of your code
 
 export default function Reveal({
   children,
