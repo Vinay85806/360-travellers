@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Search, MapPin, Calendar, Users, Star } from "./icons";
+import { heroBackground } from "@/lib/heroImages";
 
 const tabs = ["Destinations", "Experiences", "Honeymoon", "Luxury"];
 
@@ -10,55 +11,60 @@ export default function Hero() {
   const [tab, setTab] = useState("Destinations");
 
   return (
-    <section id="top" className="relative min-h-[100svh] overflow-hidden">
-      {/* Background */}
+    <section
+      id="top"
+      className="relative flex min-h-[72svh] items-center overflow-hidden lg:min-h-[78svh]"
+    >
+      {/* Full-width background */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?auto=format&fit=crop&w=2400&q=80"
-          alt="A traveller overlooking a misty mountain valley at golden hour"
+          src={heroBackground}
+          alt="Discover the world with 360 Travellers"
           fill
           priority
           sizes="100vw"
           className="animate-slow-zoom object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-coal/70 via-coal/35 to-coal/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-coal/60 to-transparent" />
+        {/* Blue-tinted overlays for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/75 via-navy/45 to-navy/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/70 to-transparent" />
       </div>
 
-      <div className="mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pb-12 pt-32 sm:px-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center px-5 pb-16 pt-28 text-center sm:px-8 sm:pt-32">
         {/* Headline */}
         <div className="max-w-3xl">
-          <span className="kicker animate-fade-up text-gold-soft">
-            <span className="h-px w-8 bg-gold-soft" />
+          <span className="kicker animate-fade-up justify-center text-sky-soft">
+            <span className="h-px w-8 bg-sky-soft" />
             Curated journeys, effortlessly yours
+            <span className="h-px w-8 bg-sky-soft" />
           </span>
 
           <h1
             className="mt-6 animate-fade-up font-display text-[2.7rem] leading-[1.04] tracking-tight text-cream sm:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.08s", opacity: 0 }}
           >
-            Travel the world,
+            Your Tour,
             <br />
-            <span className="italic text-gold-soft">beautifully</span> arranged.
+            Perfectly <span className="text-sky">Personalised</span>
+            <span className="text-sky-soft">!</span>
           </h1>
 
           <p
-            className="mt-6 max-w-xl animate-fade-up text-base leading-relaxed text-cream/80 sm:text-lg"
+            className="mx-auto mt-6 max-w-xl animate-fade-up text-base leading-relaxed text-cream/85 sm:text-lg"
             style={{ animationDelay: "0.16s", opacity: 0 }}
           >
-            Handcrafted holidays, private experiences and stays you&rsquo;ll
-            never forget. From the Maldives to the Himalayas — designed around
-            you, delivered down to the last detail.
+            Explore expertly curated multi-day tours — handcrafted holidays and
+            private experiences across 60+ destinations, designed around you.
           </p>
         </div>
 
         {/* Search card */}
         <div
           id="search"
-          className="mt-10 animate-fade-up scroll-mt-28"
+          className="mt-10 w-full max-w-4xl animate-fade-up scroll-mt-28"
           style={{ animationDelay: "0.24s", opacity: 0 }}
         >
-          <div className="max-w-4xl rounded-3xl border border-white/15 bg-white/10 p-2.5 backdrop-blur-xl shadow-lift">
+          <div className="rounded-3xl border border-white/15 bg-white/10 p-2.5 text-left shadow-lift backdrop-blur-xl">
             {/* Tabs */}
             <div className="flex flex-wrap gap-1 px-1.5 pb-2.5 pt-1.5">
               {tabs.map((t) => (
@@ -67,7 +73,7 @@ export default function Hero() {
                   onClick={() => setTab(t)}
                   className={`rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide transition-all sm:text-sm ${
                     tab === t
-                      ? "bg-gold text-coal"
+                      ? "bg-sky text-navy"
                       : "text-cream/80 hover:bg-white/10 hover:text-cream"
                   }`}
                 >
@@ -78,7 +84,7 @@ export default function Hero() {
 
             {/* Fields */}
             <div className="grid grid-cols-1 gap-1.5 rounded-2xl bg-cream p-2 md:grid-cols-[1.4fr_1fr_1fr_auto]">
-              <Field icon={<MapPin className="text-pine" />} label="Where to">
+              <Field icon={<MapPin className="text-blue" />} label="Where to">
                 <input
                   list="dest-list"
                   placeholder="Search a destination"
@@ -88,14 +94,14 @@ export default function Hero() {
                   <option value="Bali, Indonesia" />
                   <option value="Maldives" />
                   <option value="Kashmir, India" />
-                  <option value="Santorini, Greece" />
-                  <option value="Swiss Alps" />
+                  <option value="Dubai, UAE" />
+                  <option value="Singapore" />
                 </datalist>
               </Field>
 
               <div className="hidden w-px self-stretch bg-ink/10 md:block" />
 
-              <Field icon={<Calendar className="text-pine" />} label="When">
+              <Field icon={<Calendar className="text-blue" />} label="When">
                 <input
                   type="text"
                   onFocus={(e) => (e.currentTarget.type = "date")}
@@ -109,7 +115,7 @@ export default function Hero() {
 
               <div className="hidden w-px self-stretch bg-ink/10 md:block" />
 
-              <Field icon={<Users className="text-pine" />} label="Travellers">
+              <Field icon={<Users className="text-blue" />} label="Travellers">
                 <select className="w-full cursor-pointer appearance-none bg-transparent text-sm font-medium text-ink focus:outline-none">
                   <option>2 Adults</option>
                   <option>1 Adult</option>
@@ -118,7 +124,7 @@ export default function Hero() {
                 </select>
               </Field>
 
-              <button className="group flex items-center justify-center gap-2 rounded-xl bg-pine px-6 py-4 text-sm font-semibold text-cream transition-all hover:bg-pine-deep">
+              <button className="group flex items-center justify-center gap-2 rounded-xl bg-blue px-6 py-4 text-sm font-semibold text-cream transition-all hover:bg-blue-deep">
                 <Search className="h-4 w-4" />
                 <span>Search</span>
               </button>
@@ -126,14 +132,11 @@ export default function Hero() {
           </div>
 
           {/* Trust row */}
-          <div
-            className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-cream/80"
-            style={{ animationDelay: "0.3s" }}
-          >
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm text-cream/80">
             <span className="inline-flex items-center gap-2">
               <span className="flex">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 text-gold-soft" />
+                  <Star key={i} className="h-4 w-4 text-sky-soft" />
                 ))}
               </span>
               <strong className="font-semibold text-cream">4.9/5</strong> from

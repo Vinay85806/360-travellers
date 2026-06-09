@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="640" viewBox="0 0 800 640" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="800" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0B2A4A"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="640" fill="url(#g)"/>
+  <g stroke="#EFF6FF" stroke-opacity="0.55" stroke-width="6" fill="none"
+     stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="400" cy="300" r="96"/>
+    <polygon points="448 252 412 348 352 396 388 300"/>
+  </g>
+  <text x="400" y="470" text-anchor="middle"
+        font-family="Georgia, serif" font-size="34" fill="#EFF6FF" fill-opacity="0.8">
+    360 Travellers
+  </text>
+</svg>

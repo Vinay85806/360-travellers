@@ -1,1 +1,146 @@
 @import "tailwindcss";
+
+/* ============================================================
+   360 Travellers — Ocean / Trust blue design system
+   Old token names (pine, gold, cream, ink, coal) are mapped
+   onto the new blue palette so existing components recolor
+   automatically. New blue-native names are also exposed.
+   ============================================================ */
+@theme {
+  /* Brand blues */
+  --color-navy: #0b2a4a; /* deep brand navy  (was: pine-deep) */
+  --color-navy-soft: #123a63; /* lighter navy surface */
+  --color-blue: #2563eb; /* primary accent   (was: pine / gold mix) */
+  --color-blue-deep: #1d4ed8; /* hover/pressed */
+  --color-sky: #38bdf8; /* bright secondary accent */
+  --color-sky-soft: #7dd3fc; /* soft sky */
+
+  /* Neutrals / surfaces */
+  --color-cream: #ffffff; /* page surface (was warm cream → now white) */
+  --color-ivory: #f8fafc; /* alt section bg */
+  --color-tint: #eff6ff; /* pale blue tint band */
+  --color-ink: #0f172a; /* primary text (slate-900) */
+  --color-coal: #0a1628; /* darkest — footer/overlays */
+
+  /* ---- Backwards-compat aliases (old class names keep working) ---- */
+  --color-pine: #2563eb;
+  --color-pine-deep: #0b2a4a;
+  --color-pine-soft: #3b82f6;
+  --color-gold: #2563eb;
+  --color-gold-deep: #1d4ed8;
+  --color-gold-soft: #7dd3fc;
+
+  /* Fonts (wired in layout.tsx via CSS variables) */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px -6px rgb(15 23 42 / 0.12);
+  --shadow-lift: 0 18px 50px -12px rgb(11 42 74 / 0.28);
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+}
+
+/* ---------- Custom utilities used across components ---------- */
+
+/* Kicker eyebrow label */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Subtle noise/grain overlay for dark sections */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* Hide scrollbars on horizontal rails */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reveal-on-scroll (driven by components/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Keyframe animations ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+.animate-slow-zoom {
+  animation: slow-zoom 18s ease-out forwards;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-slow-zoom,
+  .animate-float {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

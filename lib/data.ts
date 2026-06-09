@@ -53,7 +53,7 @@ export const destinations: Destination[] = [
     region: "India",
     experiences: 142,
     fromPrice: 26999,
-    image: img("photo-1566837497312-7be4a47e6b77"),
+    image: img("photo-1601581875309-fafbf2d3ed3a"),
   },
   {
     name: "Maldives",
