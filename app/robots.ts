@@ -1,0 +1,13 @@
+import type { MetadataRoute } from "next";
+
+const SITE = "https://360travellers.vercel.app"; // update to your live domain
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: "*",
+      allow: "/",
+    },
+    sitemap: `${SITE}/sitemap.xml`,
+  };
+}

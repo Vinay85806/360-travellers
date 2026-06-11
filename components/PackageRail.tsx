@@ -53,7 +53,7 @@ export default function PackageRail({
                 className="w-[78%] shrink-0 snap-start sm:w-[44%] lg:w-[31%]"
               >
                 <Link
-                  href={`/packages/${p.id}`}
+                  href={`/packages/${p.slug ?? p.id}`}
                   className="group flex h-full flex-col overflow-hidden rounded-3xl border border-ink/8 bg-cream shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
                 >
                   <div className="relative aspect-[5/4] overflow-hidden">

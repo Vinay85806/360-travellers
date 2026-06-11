@@ -133,3 +133,33 @@ export const Twitter = (p: IconProps) => (
     <path d="M4 4l6.6 8.8L4.4 20H6l5.4-5.9L15.6 20H20l-7-9.3L19.4 4H17.8l-5 5.5L8.6 4H4Z" />
   </svg>
 );
+
+export const Check = (p: IconProps) => (
+  <svg {...base(p)}>
+    <polyline points="4 12.5 9.5 18 20 6.5" />
+  </svg>
+);
+
+export const XMark = (p: IconProps) => (
+  <svg {...base(p)}>
+    <line x1="6" y1="6" x2="18" y2="18" />
+    <line x1="18" y1="6" x2="6" y2="18" />
+  </svg>
+);
+
+export const Images = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3" y="3" width="14" height="14" rx="2.5" />
+    <path d="M7 21h12a2 2 0 0 0 2-2V8" />
+    <circle cx="8.5" cy="8.5" r="1.4" />
+    <path d="M3 14l4-4 4 3.5" />
+  </svg>
+);
+
+export const Info = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="9" />
+    <line x1="12" y1="11" x2="12" y2="16" />
+    <circle cx="12" cy="8" r="0.6" fill="currentColor" />
+  </svg>
+);

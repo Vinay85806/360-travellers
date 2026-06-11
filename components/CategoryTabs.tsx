@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Compass, MapPin } from "./icons";
+import { MapPin } from "./icons";
 
 export type TabItem = {
   id: string;
@@ -38,7 +38,7 @@ export default function CategoryTabs({ tabs }: { tabs: TabItem[] }) {
   return (
     <div className="sticky top-[68px] z-30 border-y border-ink/8 bg-cream/90 backdrop-blur-md">
       <div className="no-scrollbar mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-5 py-2.5 sm:px-8">
-        {tabs.map((t, i) => {
+        {tabs.map((t) => {
           const isActive = active === t.id;
           return (
             <button
@@ -53,11 +53,7 @@ export default function CategoryTabs({ tabs }: { tabs: TabItem[] }) {
                   isActive ? "text-blue" : "text-ink/45 group-hover:text-blue"
                 }`}
               >
-                {i === 0 ? (
-                  <Compass className="h-5 w-5" />
-                ) : (
-                  <MapPin className="h-5 w-5" />
-                )}
+                <MapPin className="h-5 w-5" />
               </span>
               <span className="text-xs font-semibold tracking-wide">
                 {t.label}

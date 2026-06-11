@@ -1,18 +1,10 @@
-import { getPackages } from "@/lib/packages";
+import { getPackages, groupByDestination } from "@/lib/packages";
 import CategoryTabs, { type TabItem } from "./CategoryTabs";
 import PackageRail from "./PackageRail";
 
 export default async function PackagesSection() {
-  // Pull a generous pool so each rail has cards to scroll through.
-  const packages = await getPackages(30);
-
-  const domestic = packages.filter((p) => p.category === "domestic");
-  const international = packages.filter((p) => p.category === "international");
-
-  const tabs: TabItem[] = [];
-  if (domestic.length) tabs.push({ id: "rail-domestic", label: "Domestic" });
-  if (international.length)
-    tabs.push({ id: "rail-international", label: "International" });
+  // Pull all packages so every destination rail is populated.
+  const packages = await getPackages(100);
 
   if (packages.length === 0) {
     return (
@@ -24,21 +16,26 @@ export default async function PackagesSection() {
     );
   }
 
+  const groups = groupByDestination(packages);
+
+  const tabs: TabItem[] = groups.map((g) => ({
+    id: `rail-${g.destination_slug}`,
+    label: g.destination,
+  }));
+
   return (
     <div id="all-packages" className="bg-cream">
       <CategoryTabs tabs={tabs} />
 
       <div className="py-8">
-        <PackageRail
-          id="rail-domestic"
-          title="India Packages"
-          packages={domestic}
-        />
-        <PackageRail
-          id="rail-international"
-          title="International Packages"
-          packages={international}
-        />
+        {groups.map((g) => (
+          <PackageRail
+            key={g.destination_slug}
+            id={`rail-${g.destination_slug}`}
+            title={`Tours in ${g.destination}`}
+            packages={g.packages}
+          />
+        ))}
       </div>
     </div>
   );
