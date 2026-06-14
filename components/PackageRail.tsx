@@ -22,8 +22,6 @@ export default function PackageRail({
     railRef.current?.scrollBy({ left: dir * 360, behavior: "smooth" });
   };
 
-  if (packages.length === 0) return null;
-
   return (
     <section id={id} className="scroll-mt-28 py-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -32,16 +30,31 @@ export default function PackageRail({
           <h2 className="font-display text-2xl tracking-tight text-ink sm:text-3xl">
             {title}
           </h2>
-          <Link
-            href="#all-packages"
-            className="group inline-flex items-center gap-2 rounded-full border border-blue/25 px-4 py-1.5 text-sm font-semibold text-blue transition-colors hover:bg-blue hover:text-cream"
-          >
-            View All
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+          {packages.length > 0 && (
+            <Link
+              href="#all-packages"
+              className="group inline-flex items-center gap-2 rounded-full border border-blue/25 px-4 py-1.5 text-sm font-semibold text-blue transition-colors hover:bg-blue hover:text-cream"
+            >
+              View All
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          )}
         </div>
 
+        {/* Empty state — destination serviced but no packages loaded yet */}
+        {packages.length === 0 && (
+          <div className="mt-5 rounded-2xl border border-dashed border-ink/15 bg-ivory px-6 py-8 text-center">
+            <p className="text-sm text-ink/55">
+              New {title.replace("Tours in ", "")} packages are on the way.
+              <span className="ml-1 font-semibold text-blue">
+                Enquire for a custom trip →
+              </span>
+            </p>
+          </div>
+        )}
+
         {/* Rail */}
+        {packages.length > 0 && (
         <div className="relative mt-6">
           <div
             ref={railRef}
@@ -118,6 +131,7 @@ export default function PackageRail({
             </>
           )}
         </div>
+        )}
       </div>
     </section>
   );

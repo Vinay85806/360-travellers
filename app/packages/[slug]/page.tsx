@@ -31,7 +31,7 @@ async function resolvePackage(param: string): Promise<TravelPackage | null> {
 
 type Props = { params: Promise<{ slug: string }> };
 
-const SITE = "https://360travellers.vercel.app"; // update to your live domain
+const SITE = "https://360travellers.com";
 
 // Pre-render every package page at build time for speed + SEO.
 export async function generateStaticParams() {

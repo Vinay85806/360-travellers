@@ -11,7 +11,7 @@ import {
 import Reveal from "./Reveal";
 
 const LOGO =
-  "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellersmainlogo.svg";
+  "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellers_logo.png";
 
 const columns = [
   {

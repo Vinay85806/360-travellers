@@ -69,13 +69,6 @@ export const destinations: Destination[] = [
     fromPrice: 118000,
     image: img("photo-1493976040374-85c8e12f0c0e"),
   },
-  {
-    name: "Swiss Alps",
-    region: "Switzerland",
-    experiences: 88,
-    fromPrice: 156000,
-    image: img("photo-1531366936337-7c912a4589a7"),
-  },
 ];
 
 export const packages: Package[] = [

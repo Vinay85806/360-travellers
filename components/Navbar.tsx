@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Menu, Close } from "./icons";
 
 const LOGO =
-  "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellersmainlogo.svg";
+  "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellers_logo.png";
 
 const links = [
   { label: "Destinations", href: "#destinations" },
@@ -35,6 +35,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
+    <>
     <header
       className={`fixed inset-x-0 top-0 z-50 backdrop-blur-md transition-all duration-500 ${
         scrolled
@@ -48,10 +49,10 @@ export default function Navbar() {
           <Image
             src={LOGO}
             alt="360 Travellers"
-            width={160}
-            height={42}
+            width={240}
+            height={63}
             priority
-            className="h-9 w-auto sm:h-10"
+            className="-my-2 h-14 w-auto sm:-my-3 sm:h-16"
           />
         </Link>
 
@@ -86,10 +87,12 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
+    </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — sibling of <header> so its fixed positioning
+          isn't trapped by the header's backdrop-filter containing block. */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden ${
+        className={`fixed inset-0 z-[60] lg:hidden ${
           open ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
@@ -126,7 +129,7 @@ export default function Navbar() {
                 <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-ink/8 py-4 font-display text-2xl text-ink transition-colors hover:text-gold-deep"
+                  className="block border-b border-ink/8 py-4 font-display text-2xl text-ink transition-colors hover:text-blue"
                 >
                   {l.label}
                 </Link>
@@ -136,12 +139,12 @@ export default function Navbar() {
           <Link
             href="#search"
             onClick={() => setOpen(false)}
-            className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-pine px-6 py-3.5 text-sm font-semibold text-cream"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-blue px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-blue-deep"
           >
             Plan My Trip
           </Link>
         </aside>
       </div>
-    </header>
+    </>
   );
 }

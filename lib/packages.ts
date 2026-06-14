@@ -119,6 +119,42 @@ export type DestinationGroup = {
   packages: TravelPackage[];
 };
 
+/** A serviced destination from the catalog table (drives tabs + icons). */
+export type Destination = {
+  id: string;
+  name: string;
+  slug: string;
+  icon_sprite?: string | null;
+  icon_index?: number | null;
+  sprite_cols: number;
+  sprite_rows: number;
+  // Manual crop (pixel-precise) — overrides grid when set.
+  icon_x?: number | null;
+  icon_y?: number | null;
+  icon_w?: number | null;
+  icon_h?: number | null;
+  sprite_w?: number | null;
+  sprite_h?: number | null;
+  sort_order: number;
+  active: boolean;
+};
+
+/** Fetches active destinations, ordered. Returns [] if table absent/empty. */
+export async function getDestinations(): Promise<Destination[]> {
+  const { data, error } = await supabase
+    .from("destinations")
+    .select("*")
+    .eq("active", true)
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    // Table may not exist yet (pre-migration) — fail soft.
+    console.error("Failed to fetch destinations:", error.message);
+    return [];
+  }
+  return (data as Destination[]) ?? [];
+}
+
 /**
  * Groups packages by destination, preserving first-seen order.
  * Packages without a destination fall back to a group keyed by category.

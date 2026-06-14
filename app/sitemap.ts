@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPackageSlugs } from "@/lib/packages";
 
-const SITE = "https://360travellers.vercel.app"; // update to your live domain
+const SITE = "https://360travellers.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const packages = await getAllPackageSlugs();

@@ -2,10 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { MapPin } from "./icons";
+import SpriteIcon from "./SpriteIcon";
+import {
+  SPRITE_URL,
+  SPRITE_W,
+  SPRITE_H,
+  DESTINATION_ICON_CROPS,
+} from "@/lib/destinationIcons";
 
 export type TabItem = {
   id: string;
   label: string;
+  /** destination slug — used to look up its icon crop from config */
+  slug?: string;
 };
 
 export default function CategoryTabs({ tabs }: { tabs: TabItem[] }) {
@@ -49,11 +58,21 @@ export default function CategoryTabs({ tabs }: { tabs: TabItem[] }) {
               }`}
             >
               <span
-                className={`grid h-6 w-6 place-items-center transition-colors ${
+                className={`grid h-11 w-11 place-items-center transition-colors ${
                   isActive ? "text-blue" : "text-ink/45 group-hover:text-blue"
                 }`}
               >
-                <MapPin className="h-5 w-5" />
+                {t.slug && DESTINATION_ICON_CROPS[t.slug] ? (
+                  <SpriteIcon
+                    sprite={SPRITE_URL}
+                    crop={DESTINATION_ICON_CROPS[t.slug]}
+                    spriteW={SPRITE_W}
+                    spriteH={SPRITE_H}
+                    className="h-11 w-11 bg-contain bg-center"
+                  />
+                ) : (
+                  <MapPin className="h-7 w-7" />
+                )}
               </span>
               <span className="text-xs font-semibold tracking-wide">
                 {t.label}
