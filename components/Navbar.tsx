@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Compass, Menu, Close } from "./icons";
+import { Menu, Close } from "./icons";
+
+const LOGO =
+  "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellersmainlogo.svg";
 
 const links = [
   { label: "Destinations", href: "#destinations" },
@@ -40,13 +44,15 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
         {/* Brand */}
-        <Link href="#top" className="group flex items-center gap-2.5">
-          <span className="grid h-10 w-10 place-items-center rounded-full border border-blue/25 text-blue">
-            <Compass className="h-5 w-5 transition-transform duration-700 group-hover:rotate-[110deg]" />
-          </span>
-          <span className="font-display text-xl leading-none tracking-tight text-ink">
-            360 <span className="text-blue">Travellers</span>
-          </span>
+        <Link href="#top" className="flex items-center" aria-label="360 Travellers — home">
+          <Image
+            src={LOGO}
+            alt="360 Travellers"
+            width={160}
+            height={42}
+            priority
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         {/* Desktop links */}
@@ -99,9 +105,13 @@ export default function Navbar() {
           }`}
         >
           <div className="flex items-center justify-between">
-            <span className="font-display text-lg text-ink">
-              360 <span className="text-gold-deep">Travellers</span>
-            </span>
+            <Image
+              src={LOGO}
+              alt="360 Travellers"
+              width={140}
+              height={37}
+              className="h-8 w-auto"
+            />
             <button
               aria-label="Close menu"
               onClick={() => setOpen(false)}

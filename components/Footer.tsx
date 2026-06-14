@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Compass,
   Mail,
   Phone,
   ArrowRight,
@@ -9,6 +9,9 @@ import {
   Twitter,
 } from "./icons";
 import Reveal from "./Reveal";
+
+const LOGO =
+  "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellersmainlogo.svg";
 
 const columns = [
   {
@@ -77,13 +80,14 @@ export default function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <Link href="#top" className="flex items-center gap-2.5">
-              <span className="grid h-10 w-10 place-items-center rounded-full border border-gold/40 text-gold-soft">
-                <Compass className="h-5 w-5" />
-              </span>
-              <span className="font-display text-xl tracking-tight">
-                360 <span className="text-gold-soft">Travellers</span>
-              </span>
+            <Link href="#top" className="flex items-center" aria-label="360 Travellers — home">
+              <Image
+                src={LOGO}
+                alt="360 Travellers"
+                width={170}
+                height={45}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/55">
               A boutique travel studio crafting personalised luxury journeys
