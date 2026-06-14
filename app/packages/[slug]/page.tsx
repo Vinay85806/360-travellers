@@ -189,6 +189,9 @@ export default async function PackageDetailPage({ params }: Props) {
             )}
           </div>
 
+          {/* Choose Trip Duration (sibling packages of same destination) */}
+          <DurationSwitcher siblings={siblings} currentSlug={pkg.slug} />
+
           {/* Route */}
           {route.length > 0 && (
             <div className="mt-6 rounded-2xl border border-blue/20 bg-tint/60 px-4 py-3">
@@ -207,9 +210,6 @@ export default async function PackageDetailPage({ params }: Props) {
               </div>
             </div>
           )}
-
-          {/* Choose Trip Duration (sibling packages of same destination) */}
-          <DurationSwitcher siblings={siblings} currentSlug={pkg.slug} />
 
           {/* Overview */}
           <div className="mt-8">

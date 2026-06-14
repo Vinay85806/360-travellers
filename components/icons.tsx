@@ -156,6 +156,18 @@ export const Images = (p: IconProps) => (
   </svg>
 );
 
+export const ChevronLeft = (p: IconProps) => (
+  <svg {...base(p)}>
+    <polyline points="15 18 9 12 15 6" />
+  </svg>
+);
+
+export const ChevronRight = (p: IconProps) => (
+  <svg {...base(p)}>
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+);
+
 export const Info = (p: IconProps) => (
   <svg {...base(p)}>
     <circle cx="12" cy="12" r="9" />

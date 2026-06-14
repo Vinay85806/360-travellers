@@ -65,6 +65,7 @@ export default async function PackagesSection() {
             id={`rail-${r.slug}`}
             title={`Tours in ${r.name}`}
             packages={r.packages}
+            destinationSlug={r.slug}
           />
         ))}
       </div>

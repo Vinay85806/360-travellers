@@ -8,6 +8,7 @@ import { Menu, Close } from "./icons";
 const LOGO =
   "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellers_logo.png";
 
+
 const links = [
   { label: "Destinations", href: "#destinations" },
   { label: "Packages", href: "#packages" },
@@ -45,14 +46,14 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8">
         {/* Brand */}
-        <Link href="#top" className="flex items-center" aria-label="360 Travellers — home">
+        <Link href="/" className="-my-2 sm:-my-3" aria-label="360 Travellers — home">
           <Image
             src={LOGO}
             alt="360 Travellers"
             width={240}
             height={63}
             priority
-            className="-my-2 h-14 w-auto sm:-my-3 sm:h-16"
+            className="block h-14 w-auto sm:h-16"
           />
         </Link>
 

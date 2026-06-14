@@ -11,10 +11,12 @@ export default function PackageRail({
   id,
   title,
   packages,
+  destinationSlug,
 }: {
   id: string;
   title: string;
   packages: TravelPackage[];
+  destinationSlug?: string;
 }) {
   const railRef = useRef<HTMLDivElement>(null);
 
@@ -30,9 +32,9 @@ export default function PackageRail({
           <h2 className="font-display text-2xl tracking-tight text-ink sm:text-3xl">
             {title}
           </h2>
-          {packages.length > 0 && (
+          {packages.length > 0 && destinationSlug && (
             <Link
-              href="#all-packages"
+              href={`/destinations/${destinationSlug}`}
               className="group inline-flex items-center gap-2 rounded-full border border-blue/25 px-4 py-1.5 text-sm font-semibold text-blue transition-colors hover:bg-blue hover:text-cream"
             >
               View All
