@@ -31,8 +31,15 @@ export default function DurationSwitcher({
 
   return (
     <div className="mt-8">
-      <h2 className="font-display text-2xl text-ink">Choose Trip Duration</h2>
-      <div className="no-scrollbar mt-4 flex gap-3 overflow-x-auto pb-1">
+      <h2 className="font-display text-xl text-ink sm:text-2xl">Choose Trip Duration</h2>
+
+      {/*
+        -mx-5 / sm:-mx-8 pulls the scroll track flush to the page edge,
+        matching the parent container's px-5 / sm:px-8 padding.
+        This escapes any overflow-x:hidden ancestor that would clip the scroll.
+        The matching px-5 / sm:px-8 keeps the first card visually inset.
+      */}
+      <div className="no-scrollbar -mx-5 mt-4 flex gap-2 overflow-x-auto px-5 pb-2 sm:-mx-8 sm:gap-3 sm:px-8">
         {visible.map((p) => {
           const active = p.slug === currentSlug;
           const label = p.days ? `${p.days} Days` : p.duration;
@@ -41,7 +48,7 @@ export default function DurationSwitcher({
               key={p.id}
               href={`/packages/${p.slug ?? p.id}`}
               aria-current={active ? "true" : undefined}
-              className={`group w-28 shrink-0 overflow-hidden rounded-2xl border transition-all ${
+              className={`group w-20 shrink-0 overflow-hidden rounded-xl border transition-all sm:w-28 sm:rounded-2xl ${
                 active
                   ? "border-blue ring-2 ring-blue/30"
                   : "border-ink/10 hover:border-blue/40"
@@ -52,18 +59,18 @@ export default function DurationSwitcher({
                   src={packageImage(p)}
                   alt={p.title}
                   fill
-                  sizes="112px"
+                  sizes="(max-width: 640px) 80px, 112px"
                   className="object-cover"
                 />
-                <span className="absolute bottom-1.5 left-2 font-display text-lg text-cream drop-shadow">
+                <span className="absolute bottom-1 left-1.5 font-display text-sm text-cream drop-shadow sm:bottom-1.5 sm:left-2 sm:text-lg">
                   {label}
                 </span>
               </div>
-              <div className="px-2.5 py-2">
-                <span className="block text-[0.65rem] text-ink/50">
+              <div className="px-2 py-1.5 sm:px-2.5 sm:py-2">
+                <span className="block text-[0.6rem] text-ink/50 sm:text-[0.65rem]">
                   Starting From
                 </span>
-                <span className="text-sm font-semibold text-ink">
+                <span className="text-xs font-semibold text-ink sm:text-sm">
                   {inr(p.price)}
                 </span>
               </div>
