@@ -40,7 +40,7 @@ export default function SectionHeading({
           {kicker}
         </span>
         <h2
-          className={`mt-4 font-display text-3xl leading-tight tracking-tight sm:text-[2.6rem] ${
+          className={`mt-4 font-display text-2xl leading-tight tracking-tight sm:text-3xl lg:text-[2.6rem] ${
             dark ? "text-cream" : "text-ink"
           }`}
         >

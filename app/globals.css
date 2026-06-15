@@ -42,10 +42,12 @@
 /* ---------- Base ---------- */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 body {
   background-color: var(--color-cream);
   color: var(--color-ink);
+  overflow-x: hidden;
 }
 
 /* ---------- Custom utilities used across components ---------- */

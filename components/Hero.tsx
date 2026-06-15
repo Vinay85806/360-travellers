@@ -40,7 +40,7 @@ export default function Hero() {
           </span>
 
           <h1
-            className="mt-6 animate-fade-up font-display text-[2.7rem] leading-[1.04] tracking-tight text-cream sm:text-6xl lg:text-7xl"
+            className="mt-6 animate-fade-up font-display text-[1.75rem] leading-[1.04] tracking-tight text-cream sm:text-[2.7rem] lg:text-6xl xl:text-7xl"
             style={{ animationDelay: "0.08s", opacity: 0 }}
           >
             Your Tour,

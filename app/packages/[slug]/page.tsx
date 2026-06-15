@@ -161,12 +161,12 @@ export default async function PackageDetailPage({ params }: Props) {
 
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_360px]">
         {/* ---- Left: content ---- */}
-        <div>
+        <div className="min-w-0">
           {/* Title block */}
           <span className="inline-flex items-center gap-1.5 rounded-full bg-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue">
             {pkg.category === "domestic" ? "India Package" : "International"}
           </span>
-          <h1 className="mt-3 font-display text-3xl leading-tight text-ink sm:text-4xl">
+          <h1 className="mt-3 font-display text-2xl leading-tight text-ink sm:text-3xl lg:text-4xl">
             {pkg.title}
           </h1>
 
@@ -251,7 +251,7 @@ export default async function PackageDetailPage({ params }: Props) {
             <h2 className="font-display text-2xl text-ink">
               What&rsquo;s inside the package?
             </h2>
-            <div className="mt-5 grid gap-8 rounded-2xl border border-ink/10 p-6 sm:grid-cols-2">
+            <div className="mt-5 grid gap-8 rounded-2xl border border-ink/10 p-4 sm:grid-cols-2 sm:p-6">
               <div>
                 <h3 className="font-semibold text-ink">Inclusions</h3>
                 <ul className="mt-3 space-y-2.5">
@@ -300,7 +300,7 @@ export default async function PackageDetailPage({ params }: Props) {
         </div>
 
         {/* ---- Right: sticky enquiry ---- */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
           <EnquiryForm
             packageTitle={pkg.title}
             price={pkg.price}

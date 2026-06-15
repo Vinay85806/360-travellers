@@ -76,7 +76,7 @@ export default function CategoryTabs({ tabs }: { tabs: TabItem[] }) {
   };
 
   return (
-    <div className="sticky top-[68px] z-30 border-y border-ink/8 bg-cream/90 backdrop-blur-md">
+    <div className="sticky top-20 z-30 border-y border-ink/8 bg-cream/90 backdrop-blur-md sm:top-[5.5rem]">
       <div className="relative mx-auto max-w-7xl">
         {/* Left fade + arrow */}
         <div

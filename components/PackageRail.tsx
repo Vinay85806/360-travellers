@@ -28,14 +28,14 @@ export default function PackageRail({
     <section id={id} className="scroll-mt-28 py-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <h2 className="font-display text-2xl tracking-tight text-ink sm:text-3xl">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-display text-xl tracking-tight text-ink sm:text-2xl lg:text-3xl">
             {title}
           </h2>
           {packages.length > 0 && destinationSlug && (
             <Link
               href={`/destinations/${destinationSlug}`}
-              className="group inline-flex items-center gap-2 rounded-full border border-blue/25 px-4 py-1.5 text-sm font-semibold text-blue transition-colors hover:bg-blue hover:text-cream"
+              className="group inline-flex shrink-0 items-center gap-2 rounded-full border border-blue/25 px-4 py-1.5 text-sm font-semibold text-blue transition-colors hover:bg-blue hover:text-cream"
             >
               View All
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

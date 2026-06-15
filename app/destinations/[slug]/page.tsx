@@ -157,7 +157,7 @@ export default async function DestinationPage({ params }: Props) {
                 <MapPin className="h-4 w-4" />
                 India
               </div>
-              <h1 className="mt-1 font-display text-3xl tracking-tight text-ink sm:text-4xl">
+              <h1 className="mt-1 font-display text-2xl tracking-tight text-ink sm:text-3xl lg:text-4xl">
                 Tours in {dest.name}
               </h1>
             </div>

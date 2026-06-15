@@ -77,9 +77,9 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand */}
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link href="#top" className="flex items-center" aria-label="360 Travellers — home">
               <Image
                 src={LOGO}
