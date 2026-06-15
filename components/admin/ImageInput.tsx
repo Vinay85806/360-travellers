@@ -5,13 +5,45 @@ import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 import { Upload, XMark } from "@/components/icons";
 
-async function uploadToStorage(file: File): Promise<string> {
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const path = `packages/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+/** Compress to JPEG, max 1200px wide, 82% quality — reduces 3-8 MB photos to ~200-400 KB */
+async function compressImage(file: File): Promise<File> {
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const MAX = 1200;
+      const ratio = img.width > MAX ? MAX / img.width : 1;
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * ratio);
+      canvas.height = Math.round(img.height * ratio);
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => {
+          const compressed = new File(
+            [blob!],
+            file.name.replace(/\.[^.]+$/, ".jpg"),
+            { type: "image/jpeg" }
+          );
+          resolve(compressed);
+        },
+        "image/jpeg",
+        0.82
+      );
+    };
+    img.src = objectUrl;
+  });
+}
 
-  const { error } = await supabase.storage.from("images").upload(path, file, {
-    cacheControl: "3600",
+async function uploadToStorage(file: File): Promise<string> {
+  const compressed = await compressImage(file);
+  const path = `packages/${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`;
+
+  const { error } = await supabase.storage.from("images").upload(path, compressed, {
+    cacheControl: "31536000",
     upsert: false,
+    contentType: "image/jpeg",
   });
   if (error) throw new Error(error.message);
 
@@ -33,6 +65,7 @@ export default function ImageInput({
   const [tab, setTab] = useState<"upload" | "url">("upload");
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [uploadInfo, setUploadInfo] = useState("");
   const [urlInput, setUrlInput] = useState(value.startsWith("http") ? value : "");
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -42,10 +75,13 @@ export default function ImageInput({
       return;
     }
     setUploadError("");
+    setUploadInfo("");
     setUploading(true);
+    const originalKB = Math.round(file.size / 1024);
     try {
       const url = await uploadToStorage(file);
       onChange(url);
+      setUploadInfo(`Uploaded & compressed (was ${originalKB} KB)`);
     } catch (e: unknown) {
       setUploadError((e as Error).message);
     } finally {
@@ -118,9 +154,11 @@ export default function ImageInput({
         >
           <Upload className="h-6 w-6 text-ink/30" />
           <p className="text-sm text-ink/50">
-            {uploading ? "Uploading…" : "Drag & drop or click to upload"}
+            {uploading ? "Compressing & uploading…" : "Drag & drop or click to upload"}
           </p>
-          <p className="text-xs text-ink/30">JPG, PNG, WebP — max 5 MB</p>
+          <p className="text-xs text-ink/30">
+            Any size — auto-compressed to save storage
+          </p>
           <input
             ref={fileRef}
             type="file"
@@ -151,6 +189,9 @@ export default function ImageInput({
 
       {uploadError && (
         <p className="mt-1.5 text-xs text-red-500">{uploadError}</p>
+      )}
+      {uploadInfo && !uploadError && (
+        <p className="mt-1.5 text-xs text-green-600">{uploadInfo}</p>
       )}
     </div>
   );
