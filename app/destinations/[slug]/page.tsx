@@ -193,6 +193,32 @@ export default async function DestinationPage({ params }: Props) {
       </div>
 
       <Footer />
+
+      {/* JSON-LD structured data for Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: `${dest!.name} Tour Packages`,
+            description: `Handcrafted ${dest!.name} tour packages with curated itineraries and 24/7 support.`,
+            numberOfItems: packages.length,
+            itemListElement: sorted.map((pkg, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: pkg.title,
+              url: `${SITE}/packages/${pkg.slug ?? pkg.id}`,
+              offers: {
+                "@type": "Offer",
+                price: pkg.price,
+                priceCurrency: "INR",
+                availability: "https://schema.org/InStock",
+              },
+            })),
+          }),
+        }}
+      />
     </main>
   );
 }

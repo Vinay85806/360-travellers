@@ -1,25 +1,29 @@
 import type { MetadataRoute } from "next";
-import { getAllPackageSlugs } from "@/lib/packages";
+import { getAllPackageSlugs, getDestinations } from "@/lib/packages";
 
 const SITE = "https://360travellers.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const packages = await getAllPackageSlugs();
+  const [slugs, destinations] = await Promise.all([
+    getAllPackageSlugs(),
+    getDestinations(),
+  ]);
 
-  const packageUrls: MetadataRoute.Sitemap = packages.map((p) => ({
+  const destinationUrls: MetadataRoute.Sitemap = destinations.map((d) => ({
+    url: `${SITE}/destinations/${d.slug}`,
+    changeFrequency: "daily",
+    priority: 0.9,
+  }));
+
+  const packageUrls: MetadataRoute.Sitemap = slugs.map((p) => ({
     url: `${SITE}/packages/${p.slug}`,
-    lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
 
   return [
-    {
-      url: SITE,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
-    },
+    { url: SITE, changeFrequency: "daily", priority: 1 },
+    ...destinationUrls,
     ...packageUrls,
   ];
 }

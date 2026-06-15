@@ -5,11 +5,15 @@ import {
 } from "@/lib/packages";
 import CategoryTabs, { type TabItem } from "./CategoryTabs";
 import PackageRail from "./PackageRail";
+import DestinationSection from "./DestinationSection";
 import PopularDestinations from "./PopularDestinations";
+
+/** Destinations with this many or more packages get a full grid section. */
+const FEATURED_THRESHOLD = 5;
 
 export default async function PackagesSection() {
   const [packages, destinations] = await Promise.all([
-    getPackages(100),
+    getPackages(200),
     getDestinations(),
   ]);
 
@@ -23,14 +27,9 @@ export default async function PackagesSection() {
     );
   }
 
-  // Packages grouped by their destination_slug.
   const grouped = groupByDestination(packages);
-  const packagesBySlug = new Map(
-    grouped.map((g) => [g.destination_slug, g])
-  );
+  const packagesBySlug = new Map(grouped.map((g) => [g.destination_slug, g]));
 
-  // If the catalog table is populated, it drives order + icons + the full
-  // (incl. empty) destination list. Otherwise fall back to package groups.
   const useCatalog = destinations.length > 0;
 
   const rows = useCatalog
@@ -45,30 +44,49 @@ export default async function PackagesSection() {
         packages: g.packages,
       }));
 
-  const tabs: TabItem[] = rows.map((r) => ({
-    id: `rail-${r.slug}`,
-    label: r.name,
-    slug: r.slug,
-  }));
+  // Destinations with 5+ packages get a dedicated grid section.
+  // The rest stay as horizontal rails.
+  const featured = rows.filter((r) => r.packages.length >= FEATURED_THRESHOLD);
+  const small = rows.filter((r) => r.packages.length < FEATURED_THRESHOLD && r.packages.length > 0);
+
+  const tabs: TabItem[] = rows
+    .filter((r) => r.packages.length > 0)
+    .map((r) => ({
+      id: `rail-${r.slug}`,
+      label: r.name,
+      slug: r.slug,
+    }));
 
   return (
     <div id="all-packages" className="bg-cream">
       <CategoryTabs tabs={tabs} />
-
-      {/* Popular destinations grid sits right under the tab bar */}
       <PopularDestinations />
 
-      <div className="py-8">
-        {rows.map((r) => (
-          <PackageRail
-            key={r.slug}
-            id={`rail-${r.slug}`}
-            title={`Tours in ${r.name}`}
-            packages={r.packages}
-            destinationSlug={r.slug}
-          />
-        ))}
-      </div>
+      {/* Featured destinations — full grid sections */}
+      {featured.map((r) => (
+        <DestinationSection
+          key={r.slug}
+          id={`rail-${r.slug}`}
+          name={r.name}
+          slug={r.slug}
+          packages={r.packages}
+        />
+      ))}
+
+      {/* Small destinations — horizontal scroll rails */}
+      {small.length > 0 && (
+        <div className="py-8">
+          {small.map((r) => (
+            <PackageRail
+              key={r.slug}
+              id={`rail-${r.slug}`}
+              title={`Tours in ${r.name}`}
+              packages={r.packages}
+              destinationSlug={r.slug}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
