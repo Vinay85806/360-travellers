@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Uploaded package photos never change in place (filenames are
+    // timestamp-unique), so cache optimized variants for a year instead
+    // of the 60s default — avoids repeat cold-transform latency.
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: "https",

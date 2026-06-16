@@ -5,6 +5,22 @@ import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 import { Upload, XMark } from "@/components/icons";
 
+/** Reads natural pixel width/height without altering the file. */
+async function getImageDimensions(file: File): Promise<{ width: number; height: number }> {
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve({ width: img.width, height: img.height });
+    };
+    img.src = objectUrl;
+  });
+}
+
+/** Below this width the photo will look visibly blurry once stretched on a desktop page. */
+const MIN_SHARP_WIDTH = 1000;
+
 /** Compress to JPEG, max 1200px wide, 82% quality — reduces 3-8 MB photos to ~200-400 KB */
 async function compressImage(file: File): Promise<File> {
   return new Promise((resolve) => {
@@ -66,6 +82,7 @@ export default function ImageInput({
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [uploadInfo, setUploadInfo] = useState("");
+  const [uploadWarning, setUploadWarning] = useState("");
   const [urlInput, setUrlInput] = useState(value.startsWith("http") ? value : "");
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -76,9 +93,18 @@ export default function ImageInput({
     }
     setUploadError("");
     setUploadInfo("");
+    setUploadWarning("");
     setUploading(true);
     const originalKB = Math.round(file.size / 1024);
     try {
+      const { width, height } = await getImageDimensions(file);
+      if (width < MIN_SHARP_WIDTH) {
+        setUploadWarning(
+          `This photo is only ${width}×${height}px — it will look blurry when stretched on the page. ` +
+            `Tip: avoid saving images from Google search results (those are low-res previews). ` +
+            `Click through to the source site, or use Unsplash/Pexels, for a sharp ${MIN_SHARP_WIDTH}px+ wide photo.`
+        );
+      }
       const url = await uploadToStorage(file);
       onChange(url);
       setUploadInfo(`Uploaded & compressed (was ${originalKB} KB)`);
@@ -189,6 +215,9 @@ export default function ImageInput({
 
       {uploadError && (
         <p className="mt-1.5 text-xs text-red-500">{uploadError}</p>
+      )}
+      {uploadWarning && !uploadError && (
+        <p className="mt-1.5 text-xs text-amber-600">⚠ {uploadWarning}</p>
       )}
       {uploadInfo && !uploadError && (
         <p className="mt-1.5 text-xs text-green-600">{uploadInfo}</p>
