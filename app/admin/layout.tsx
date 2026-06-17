@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
-import { LayoutGrid, PackageIcon, Plus, LogOut, Eye } from "@/components/icons";
+import { LayoutGrid, PackageIcon, Plus, LogOut, Eye, Mail } from "@/components/icons";
 import type { User } from "@supabase/supabase-js";
 
 const LOGO =
@@ -14,6 +14,7 @@ const LOGO =
 const NAV = [
   { href: "/admin", label: "Dashboard", Icon: LayoutGrid, exact: true },
   { href: "/admin/packages", label: "Packages", Icon: PackageIcon, exact: false },
+  { href: "/admin/enquiries", label: "Enquiries", Icon: Mail, exact: false },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

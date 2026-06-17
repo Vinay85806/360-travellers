@@ -303,6 +303,7 @@ export default async function PackageDetailPage({ params }: Props) {
         <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
           <EnquiryForm
             packageTitle={pkg.title}
+            packageSlug={pkg.slug ?? pkg.id}
             price={pkg.price}
             originalPrice={pkg.original_price}
           />

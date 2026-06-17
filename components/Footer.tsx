@@ -1,14 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Mail,
-  Phone,
-  ArrowRight,
-  Instagram,
-  Facebook,
-  Twitter,
-} from "./icons";
+import { Mail, Phone, Instagram, Facebook, Twitter } from "./icons";
 import Reveal from "./Reveal";
+import NewsletterForm from "./NewsletterForm";
 
 const LOGO =
   "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360travellers_logo.png";
@@ -52,24 +46,8 @@ export default function Footer() {
                 quiet-season escapes — no noise, just good travel.
               </p>
             </div>
-            <div className="lg:justify-self-end lg:text-right">
-              <div className="flex max-w-md flex-col gap-2.5 sm:flex-row">
-                <div className="flex flex-1 items-center gap-2.5 rounded-full bg-cream px-5 py-3.5">
-                  <Mail className="h-4 w-4 text-pine" />
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="w-full bg-transparent text-sm text-ink placeholder:text-ink/40 focus:outline-none"
-                  />
-                </div>
-                <button className="group inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3.5 text-sm font-semibold text-coal transition-colors hover:bg-gold-soft">
-                  Subscribe
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </button>
-              </div>
-              <p className="mt-3 text-xs text-cream/45">
-                By subscribing you agree to our privacy policy.
-              </p>
+            <div className="lg:justify-self-end">
+              <NewsletterForm />
             </div>
           </div>
         </Reveal>

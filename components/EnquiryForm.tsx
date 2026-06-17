@@ -5,19 +5,50 @@ import { inr } from "@/lib/format";
 
 export default function EnquiryForm({
   packageTitle,
+  packageSlug,
   price,
   originalPrice,
 }: {
   packageTitle: string;
+  packageSlug?: string;
   price: number;
   originalPrice?: number | null;
 }) {
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    travelDate: "",
+    travellers: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">(
+    "idle"
+  );
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const set =
+    (field: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // No backend yet — capture intent locally. Wire to an API/email later.
-    setSubmitted(true);
+    setStatus("sending");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, packageTitle, packageSlug }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Something went wrong.");
+      setStatus("done");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+    }
   };
 
   const saving =
@@ -41,7 +72,7 @@ export default function EnquiryForm({
         <span className="text-xs text-ink/50">/ adult</span>
       </div>
 
-      {submitted ? (
+      {status === "done" ? (
         <div className="mt-5 rounded-2xl bg-tint p-5 text-center">
           <p className="font-display text-lg text-navy">Thank you! 🎉</p>
           <p className="mt-1 text-sm text-ink/65">
@@ -53,12 +84,16 @@ export default function EnquiryForm({
           <input
             required
             type="text"
+            value={form.name}
+            onChange={set("name")}
             placeholder="Full Name *"
             className="w-full rounded-xl border border-ink/15 bg-ivory px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-blue focus:outline-none"
           />
           <input
             required
             type="email"
+            value={form.email}
+            onChange={set("email")}
             placeholder="Email *"
             className="w-full rounded-xl border border-ink/15 bg-ivory px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-blue focus:outline-none"
           />
@@ -69,6 +104,8 @@ export default function EnquiryForm({
             <input
               required
               type="tel"
+              value={form.phone}
+              onChange={set("phone")}
               placeholder="Your Phone *"
               className="w-full rounded-xl border border-ink/15 bg-ivory px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-blue focus:outline-none"
             />
@@ -76,6 +113,8 @@ export default function EnquiryForm({
           <div className="flex gap-2">
             <input
               type="text"
+              value={form.travelDate}
+              onChange={set("travelDate")}
               onFocus={(e) => (e.currentTarget.type = "date")}
               onBlur={(e) => {
                 if (!e.currentTarget.value) e.currentTarget.type = "text";
@@ -86,20 +125,30 @@ export default function EnquiryForm({
             <input
               type="number"
               min={1}
+              value={form.travellers}
+              onChange={set("travellers")}
               placeholder="Travellers"
               className="w-full rounded-xl border border-ink/15 bg-ivory px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-blue focus:outline-none"
             />
           </div>
           <textarea
             rows={3}
+            value={form.message}
+            onChange={set("message")}
             placeholder="Message…"
             className="w-full rounded-xl border border-ink/15 bg-ivory px-4 py-3 text-sm text-ink placeholder:text-ink/40 focus:border-blue focus:outline-none"
           />
+
+          {status === "error" && (
+            <p className="text-sm text-red-600">{errorMsg}</p>
+          )}
+
           <button
             type="submit"
-            className="w-full rounded-xl bg-blue px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-blue-deep"
+            disabled={status === "sending"}
+            className="w-full rounded-xl bg-blue px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-blue-deep disabled:opacity-60"
           >
-            Send Enquiry
+            {status === "sending" ? "Sending…" : "Send Enquiry"}
           </button>
         </form>
       )}
