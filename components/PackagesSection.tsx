@@ -7,8 +7,6 @@ import CategoryTabs, { type TabItem } from "./CategoryTabs";
 import PackageRail from "./PackageRail";
 import PopularDestinations from "./PopularDestinations";
 
-/** Number of preview cards shown per destination on the homepage. */
-const PREVIEW_COUNT = 3;
 
 /**
  * Interleaves domestic and international destinations proportionally.
@@ -88,7 +86,7 @@ export default async function PackagesSection() {
             key={r.slug}
             id={`rail-${r.slug}`}
             title={`Tours in ${r.name}`}
-            packages={r.packages.slice(0, PREVIEW_COUNT)}
+            packages={r.packages}
             totalCount={r.packages.length}
             destinationSlug={r.slug}
           />
