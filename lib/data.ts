@@ -5,6 +5,7 @@ export type Destination = {
   fromPrice: number;
   image: string;
   featured?: boolean;
+  slug?: string;
 };
 
 export type Package = {
@@ -34,40 +35,45 @@ const img = (id: string, w = 1200) =>
 
 export const destinations: Destination[] = [
   {
-    name: "Bali",
-    region: "Indonesia",
-    experiences: 184,
-    fromPrice: 48999,
-    image: img("photo-1537996194471-e657df975ab4"),
-    featured: true,
-  },
-  {
-    name: "Santorini",
-    region: "Greece",
-    experiences: 96,
-    fromPrice: 132000,
-    image: img("photo-1570077188670-e3a8d69ac5ff"),
-  },
-  {
     name: "Kashmir",
-    region: "India",
+    region: "Jammu & Kashmir, India",
     experiences: 142,
-    fromPrice: 26999,
+    fromPrice: 18999,
     image: img("photo-1601581875309-fafbf2d3ed3a"),
+    featured: true,
+    slug: "kashmir",
   },
   {
-    name: "Maldives",
-    region: "Indian Ocean",
-    experiences: 73,
-    fromPrice: 89999,
-    image: img("photo-1514282401047-d79a71a590e8"),
+    name: "Ladakh",
+    region: "Ladakh, India",
+    experiences: 98,
+    fromPrice: 24999,
+    image: img("photo-1626015365107-39a75e695a50"),
+    slug: "ladakh",
   },
   {
-    name: "Kyoto",
-    region: "Japan",
-    experiences: 121,
-    fromPrice: 118000,
-    image: img("photo-1493976040374-85c8e12f0c0e"),
+    name: "Goa",
+    region: "Goa, India",
+    experiences: 115,
+    fromPrice: 12999,
+    image: img("photo-1512343879784-a960bf40e7f2"),
+    slug: "goa",
+  },
+  {
+    name: "Kerala",
+    region: "Kerala, India",
+    experiences: 134,
+    fromPrice: 14999,
+    image: img("photo-1602216056096-3b40cc0c9944"),
+    slug: "kerala",
+  },
+  {
+    name: "Rajasthan",
+    region: "Rajasthan, India",
+    experiences: 176,
+    fromPrice: 16999,
+    image: img("photo-1477587458883-47145ed94245"),
+    slug: "rajasthan",
   },
 ];
 

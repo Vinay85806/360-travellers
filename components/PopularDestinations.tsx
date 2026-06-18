@@ -18,9 +18,9 @@ export default function PopularDestinations() {
               our travellers adore
             </>
           }
-          description="From sun-drenched islands to alpine escapes — explore the places we curate best, each one handpicked and trip-tested."
+          description="From the valleys of Kashmir to the beaches of Goa — explore India's most-loved destinations, each one handpicked and trip-tested."
           ctaLabel="View all destinations"
-          ctaHref="#"
+          ctaHref="/destinations"
         />
 
         {/* Bento grid: first card spans larger */}
@@ -36,7 +36,7 @@ export default function PopularDestinations() {
               }
             >
               <Link
-                href="#packages"
+                href={d.slug ? `/destinations/${d.slug}` : "#packages"}
                 className="group relative block h-full overflow-hidden rounded-3xl shadow-soft"
               >
                 <div
