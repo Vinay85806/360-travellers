@@ -35,21 +35,21 @@ const img = (id: string, w = 1200) =>
 
 export const destinations: Destination[] = [
   {
-    name: "Kashmir",
-    region: "Jammu & Kashmir, India",
-    experiences: 142,
-    fromPrice: 18999,
-    image: img("photo-1601581875309-fafbf2d3ed3a"),
+    name: "Thailand",
+    region: "Southeast Asia",
+    experiences: 184,
+    fromPrice: 34999,
+    image: img("photo-1508009603885-50cf7c579365"),
     featured: true,
-    slug: "kashmir",
+    slug: "thailand",
   },
   {
-    name: "Ladakh",
-    region: "Ladakh, India",
-    experiences: 98,
-    fromPrice: 24999,
-    image: img("photo-1626015365107-39a75e695a50"),
-    slug: "ladakh",
+    name: "Dubai",
+    region: "United Arab Emirates",
+    experiences: 112,
+    fromPrice: 42999,
+    image: img("photo-1512453979798-5ea266f8880c"),
+    slug: "dubai",
   },
   {
     name: "Goa",

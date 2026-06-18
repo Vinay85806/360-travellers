@@ -18,7 +18,7 @@ export default function PopularDestinations() {
               our travellers adore
             </>
           }
-          description="From the valleys of Kashmir to the beaches of Goa — explore India's most-loved destinations, each one handpicked and trip-tested."
+          description="From the temples of Thailand to the beaches of Goa — explore our most-loved destinations, each one handpicked and trip-tested."
           ctaLabel="View all destinations"
           ctaHref="/destinations"
         />
