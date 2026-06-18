@@ -129,8 +129,8 @@ export default function PackageRail({
               ))}
             </div>
 
-            {/* Arrow controls (desktop) */}
-            {packages.length > 3 && (
+            {/* Arrow controls (desktop only — mouse users can't swipe) */}
+            {packages.length > 1 && (
               <>
                 <button
                   aria-label="Scroll left"
