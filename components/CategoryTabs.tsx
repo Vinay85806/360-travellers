@@ -132,10 +132,10 @@ export default function CategoryTabs({ tabs }: { tabs: TabItem[] }) {
                 >
                   {t.slug && DESTINATION_ICON_CROPS[t.slug] ? (
                     <SpriteIcon
-                      sprite={SPRITE_URL}
+                      sprite={DESTINATION_ICON_CROPS[t.slug].sprite ?? SPRITE_URL}
                       crop={DESTINATION_ICON_CROPS[t.slug]}
-                      spriteW={SPRITE_W}
-                      spriteH={SPRITE_H}
+                      spriteW={DESTINATION_ICON_CROPS[t.slug].spriteW ?? SPRITE_W}
+                      spriteH={DESTINATION_ICON_CROPS[t.slug].spriteH ?? SPRITE_H}
                       className="h-11 w-11 bg-contain bg-center"
                     />
                   ) : (
