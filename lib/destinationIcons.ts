@@ -14,9 +14,9 @@ export const SPRITE_H = 709;
 
 // ── Sprite 2 — new icons (Ladakh, Spiti, Chardham, Uttarakhand, Kashmir …) ───
 // TODO: paste the public URL of your new sprite from Supabase Storage below
-export const SPRITE2_URL = "PASTE_NEW_SPRITE_URL_HERE";
-export const SPRITE2_W = 1270; // update with actual width  of the new PNG
-export const SPRITE2_H = 954;  // update with actual height of the new PNG
+export const SPRITE2_URL = "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/icons/icons.png";
+export const SPRITE2_W = 1280; // update with actual width  of the new PNG
+export const SPRITE2_H = 832;  // update with actual height of the new PNG
 
 export type IconCrop = {
   x: number; y: number; w: number; h: number;
