@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { inr } from "@/lib/format";
-import { Clock, ArrowRight } from "./icons";
+import { Clock, ArrowRight, Star, MapPin } from "./icons";
 import { packageImage, type TravelPackage } from "@/lib/packages";
 
 export default function PackageRail({
@@ -102,27 +102,49 @@ export default function PackageRail({
                       )}
                     </div>
 
-                    {/* Compact body — title + price only */}
-                    <div className="flex items-center justify-between gap-3 px-4 py-3.5">
-                      <div className="min-w-0">
-                        <h3 className="truncate font-display text-sm font-semibold leading-snug text-ink sm:text-base">
-                          {p.title}
-                        </h3>
-                        <div className="mt-0.5 flex items-baseline gap-1">
+                    {/* Card body */}
+                    <div className="flex flex-1 flex-col gap-2 px-4 py-3.5">
+                      {/* Title */}
+                      <h3 className="line-clamp-2 font-display text-sm font-semibold leading-snug text-ink sm:text-base">
+                        {p.title}
+                      </h3>
+
+                      {/* Location + rating row */}
+                      <div className="flex items-center justify-between gap-2">
+                        {(p.location ?? p.destination) && (
+                          <span className="flex min-w-0 items-center gap-1 text-xs text-ink/50">
+                            <MapPin className="h-3 w-3 shrink-0" />
+                            <span className="truncate">{p.location ?? p.destination}</span>
+                          </span>
+                        )}
+                        {p.rating && (
+                          <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-amber-500">
+                            <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                            {p.rating}
+                            {p.review_count ? (
+                              <span className="font-normal text-ink/40">({p.review_count})</span>
+                            ) : null}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Price row */}
+                      <div className="mt-auto flex items-center justify-between pt-1">
+                        <div>
                           {p.original_price && p.original_price > p.price && (
-                            <span className="text-xs text-ink/40 line-through">
+                            <span className="block text-xs text-ink/40 line-through">
                               {inr(p.original_price)}
                             </span>
                           )}
                           <span className="font-display text-base text-blue">
                             {inr(p.price)}
                           </span>
-                          <span className="text-xs text-ink/45">/ person</span>
+                          <span className="ml-1 text-xs text-ink/45">/ person</span>
                         </div>
+                        <span className="shrink-0 rounded-full bg-tint p-2 text-blue transition-colors group-hover:bg-blue group-hover:text-cream">
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </span>
                       </div>
-                      <span className="shrink-0 rounded-full bg-tint p-2 text-blue transition-colors group-hover:bg-blue group-hover:text-cream">
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </span>
                     </div>
                   </Link>
                 </article>
