@@ -45,13 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!pkg) return { title: "Package not found — 360 Travellers" };
 
-  const title = `${pkg.title} — ${pkg.duration} | 360 Travellers`;
-  const description = pkg.description.slice(0, 160);
+  // Prefer per-package SEO fields; fall back to sensible defaults.
+  const title = pkg.meta_title || `${pkg.title} — ${pkg.duration} | 360 Travellers`;
+  const description =
+    pkg.meta_description || pkg.description.slice(0, 160);
   const image = pkg.image_url || `${SITE}/images/placeholder.svg`;
 
   return {
     title,
     description,
+    keywords: pkg.keywords && pkg.keywords.length ? pkg.keywords : undefined,
     alternates: { canonical: `${SITE}/packages/${pkg.slug}` },
     openGraph: {
       title,

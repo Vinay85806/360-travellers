@@ -31,6 +31,9 @@ export type TravelPackage = {
   route?: string[];
   rating?: number | null;
   review_count?: number | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  keywords?: string[];
   created_at?: string;
 };
 
@@ -57,6 +60,7 @@ function normalize(row: TravelPackage): TravelPackage {
     exclusions: arr(row.exclusions),
     know_before: arr(row.know_before),
     route: arr(row.route),
+    keywords: arr(row.keywords),
     itinerary: Array.isArray(row.itinerary) ? row.itinerary : [],
   };
 }
