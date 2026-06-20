@@ -93,13 +93,19 @@ const DEFAULT_KNOW_BEFORE = [
 ];
 
 function jsonLd(pkg: TravelPackage) {
+  // Modelled as a Product so Google accepts aggregateRating + offers for
+  // rich results. (aggregateRating is NOT valid on TouristTrip.)
   return {
     "@context": "https://schema.org",
-    "@type": "TouristTrip",
+    "@type": "Product",
     name: pkg.title,
     description: pkg.description,
-    image: pkg.image_url || undefined,
-    touristType: pkg.category === "domestic" ? "Domestic" : "International",
+    image: pkg.image_url || `${SITE}/images/placeholder.svg`,
+    category: pkg.category === "domestic" ? "Domestic Tour" : "International Tour",
+    brand: {
+      "@type": "Brand",
+      name: "360 Travellers",
+    },
     offers: {
       "@type": "Offer",
       price: pkg.price,
@@ -113,6 +119,8 @@ function jsonLd(pkg: TravelPackage) {
             "@type": "AggregateRating",
             ratingValue: pkg.rating,
             reviewCount: pkg.review_count,
+            bestRating: 5,
+            worstRating: 1,
           },
         }
       : {}),
