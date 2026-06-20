@@ -23,9 +23,6 @@ export const metadata: Metadata = {
   title: "360 Travellers — Curated Luxury Journeys, Effortlessly Yours",
   description:
     "Handcrafted holidays, private experiences and unforgettable stays across 60+ destinations. Bali, Maldives, Kashmir, Santorini and beyond — designed around you.",
-  icons: {
-    icon: "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/logos/360%20Travellers%20favicon.jpg",
-  },
   keywords: [
     "luxury travel",
     "custom holidays",
