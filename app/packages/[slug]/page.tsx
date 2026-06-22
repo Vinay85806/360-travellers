@@ -10,6 +10,8 @@ import PackageGallery from "@/components/PackageGallery";
 import ItineraryAccordion from "@/components/ItineraryAccordion";
 import DurationSwitcher from "@/components/DurationSwitcher";
 import EnquiryForm from "@/components/EnquiryForm";
+import TrustBadges from "@/components/TrustBadges";
+import PolicyAccordion from "@/components/PolicyAccordion";
 import { Clock, MapPin, Star, Check, XMark, Info, ArrowRight } from "@/components/icons";
 import {
   getPackageBySlug,
@@ -330,6 +332,9 @@ export default async function PackageDetailPage({ params }: Props) {
           </div>
         </aside>
       </div>
+
+      <TrustBadges />
+      <PolicyAccordion />
 
       <Footer />
     </main>
