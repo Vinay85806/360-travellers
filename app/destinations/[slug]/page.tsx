@@ -14,6 +14,7 @@ import {
   packageImage,
   type TravelPackage,
 } from "@/lib/packages";
+import PackageCardActions from "@/components/PackageCardActions";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,12 +43,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 function PackageCard({ pkg }: { pkg: TravelPackage }) {
+  const slug = pkg.slug ?? pkg.id;
   return (
-    <article>
-      <Link
-        href={`/packages/${pkg.slug ?? pkg.id}`}
-        className="group flex h-full flex-col overflow-hidden rounded-3xl border border-ink/8 bg-cream shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
-      >
+    <article className="group flex flex-col overflow-hidden rounded-3xl border border-ink/8 bg-cream shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+      <Link href={`/packages/${slug}`} className="flex flex-col flex-1">
         {/* Image */}
         <div className="relative aspect-[5/4] overflow-hidden">
           <Image
@@ -121,6 +120,15 @@ function PackageCard({ pkg }: { pkg: TravelPackage }) {
           </div>
         </div>
       </Link>
+
+      {/* WhatsApp + Enquiry buttons — outside the link so they don't trigger navigation */}
+      <PackageCardActions
+        title={pkg.title}
+        slug={slug}
+        price={pkg.price}
+        originalPrice={pkg.original_price}
+        duration={pkg.duration}
+      />
     </article>
   );
 }
