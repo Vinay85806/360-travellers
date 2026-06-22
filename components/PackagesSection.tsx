@@ -7,11 +7,11 @@ import CategoryTabs, { type TabItem } from "./CategoryTabs";
 import PackageRail from "./PackageRail";
 import PopularDestinations from "./PopularDestinations";
 
+const BEACH_SLUGS = new Set([
+  "maldives", "bali", "goa", "andaman", "thailand", "lakshadweep",
+  "singapore", "vietnam", "kerala",
+]);
 
-/**
- * Interleaves domestic and international destinations proportionally.
- * e.g. 15 domestic + 7 international → D D I D D I … (2:1 ratio)
- */
 function interleave<T>(domestic: T[], intl: T[]): T[] {
   if (intl.length === 0) return domestic;
   if (domestic.length === 0) return intl;
@@ -27,7 +27,7 @@ function interleave<T>(domestic: T[], intl: T[]): T[] {
   return result;
 }
 
-export default async function PackagesSection() {
+export default async function PackagesSection({ filter }: { filter?: string }) {
   const [packages, destinations] = await Promise.all([
     getPackages(200),
     getDestinations(),
@@ -62,12 +62,21 @@ export default async function PackagesSection() {
         isInternational: false,
       }));
 
-  // Interleave domestic + international proportionally
   const domestic = allRows.filter((r) => !r.isInternational);
   const international = allRows.filter((r) => r.isInternational);
-  const rows = interleave(domestic, international);
+  const interleavedRows = interleave(domestic, international);
 
-  const tabs: TabItem[] = rows
+  // Apply filter from search tab selection
+  const rows =
+    filter === "domestic"
+      ? domestic
+      : filter === "international"
+      ? international
+      : filter === "beach"
+      ? interleavedRows.filter((r) => BEACH_SLUGS.has(r.slug))
+      : interleavedRows;
+
+  const tabs: TabItem[] = interleavedRows
     .filter((r) => r.packages.length > 0)
     .map((r) => ({
       id: `rail-${r.slug}`,
@@ -75,23 +84,48 @@ export default async function PackagesSection() {
       slug: r.slug,
     }));
 
+  const filterLabel =
+    filter === "domestic"
+      ? "Domestic India"
+      : filter === "international"
+      ? "International"
+      : filter === "beach"
+      ? "Beach & Islands"
+      : null;
+
   return (
     <div id="all-packages" className="bg-cream">
       <CategoryTabs tabs={tabs} />
       <PopularDestinations />
 
+      {filterLabel && (
+        <div className="mx-auto max-w-7xl px-5 pb-2 pt-6 sm:px-8">
+          <p className="text-sm font-semibold text-blue">
+            Showing: {filterLabel} packages
+          </p>
+        </div>
+      )}
+
       <div className="divide-y divide-ink/6">
-        {rows.map((r) => (
-          <PackageRail
-            key={r.slug}
-            id={`rail-${r.slug}`}
-            title={`Tours in ${r.name}`}
-            packages={r.packages}
-            totalCount={r.packages.length}
-            destinationSlug={r.slug}
-          />
-        ))}
+        {rows
+          .filter((r) => r.packages.length > 0)
+          .map((r) => (
+            <PackageRail
+              key={r.slug}
+              id={`rail-${r.slug}`}
+              title={`Tours in ${r.name}`}
+              packages={r.packages}
+              totalCount={r.packages.length}
+              destinationSlug={r.slug}
+            />
+          ))}
       </div>
+
+      {rows.filter((r) => r.packages.length > 0).length === 0 && (
+        <p className="mx-auto max-w-7xl px-5 py-16 text-center text-ink/55 sm:px-8">
+          No packages found for this filter.
+        </p>
+      )}
     </div>
   );
 }

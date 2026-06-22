@@ -1,21 +1,91 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Search, MapPin, Calendar, Users, Star } from "./icons";
 import { heroBackground } from "@/lib/heroImages";
 
-const tabs = ["Destinations", "Experiences", "Honeymoon", "Luxury"];
+const tabs = [
+  { id: "all",           label: "All Trips" },
+  { id: "domestic",      label: "Domestic India" },
+  { id: "international", label: "International" },
+  { id: "beach",         label: "Beach & Islands" },
+];
+
+// Map common typed strings → destination slug
+const DEST_SLUG: Record<string, string> = {
+  bali: "bali", "bali indonesia": "bali",
+  maldives: "maldives",
+  kashmir: "kashmir", "kashmir india": "kashmir",
+  dubai: "dubai", "dubai uae": "dubai",
+  thailand: "thailand", "thailand bangkok": "thailand",
+  kerala: "kerala",
+  goa: "goa",
+  rajasthan: "rajasthan",
+  himachal: "himachal-pradesh", "himachal pradesh": "himachal-pradesh",
+  andaman: "andaman", "andaman nicobar": "andaman",
+  assam: "assam",
+  uttarakhand: "uttarakhand",
+  gujarat: "gujarat",
+  "uttar pradesh": "uttar-pradesh", up: "uttar-pradesh",
+  vietnam: "vietnam",
+  japan: "japan",
+  singapore: "singapore",
+  ladakh: "ladakh",
+  spiti: "spiti-valley", "spiti valley": "spiti-valley",
+  meghalaya: "meghalaya",
+  sikkim: "sikkim",
+  lakshadweep: "lakshadweep",
+  maharashtra: "maharashtra",
+  karnataka: "karnataka",
+  "west bengal": "west-bengal",
+};
 
 export default function Hero() {
-  const [tab, setTab] = useState("Destinations");
+  const [tab, setTab] = useState("all");
+  const destRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const handleSearch = () => {
+    const raw = destRef.current?.value.trim().toLowerCase() ?? "";
+    const slug = DEST_SLUG[raw];
+    if (slug) {
+      // Jump straight to that destination's rail
+      router.push(`/#rail-${slug}`);
+      setTimeout(() => {
+        document.getElementById(`rail-${slug}`)?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else if (raw) {
+      // Unknown destination — go to packages with filter
+      router.push(`/?filter=all#all-packages`);
+      setTimeout(() => {
+        document.getElementById("all-packages")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      // No input — just scroll down
+      document.getElementById("all-packages")?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleTab = (id: string) => {
+    setTab(id);
+    if (id === "all") {
+      router.push("/#all-packages");
+    } else {
+      router.push(`/?filter=${id}#all-packages`);
+    }
+    setTimeout(() => {
+      document.getElementById("all-packages")?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+  };
 
   return (
     <section
       id="top"
       className="relative flex min-h-[72svh] items-center overflow-hidden lg:min-h-[78svh]"
     >
-      {/* Full-width background */}
+      {/* Background */}
       <div className="absolute inset-0 -z-10">
         <Image
           src={heroBackground}
@@ -25,7 +95,6 @@ export default function Hero() {
           sizes="100vw"
           className="animate-slow-zoom object-cover"
         />
-        {/* Blue-tinted overlays for legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-navy/75 via-navy/45 to-navy/85" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/70 to-transparent" />
       </div>
@@ -69,15 +138,15 @@ export default function Hero() {
             <div className="flex flex-wrap gap-1 px-1.5 pb-2.5 pt-1.5">
               {tabs.map((t) => (
                 <button
-                  key={t}
-                  onClick={() => setTab(t)}
+                  key={t.id}
+                  onClick={() => handleTab(t.id)}
                   className={`rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide transition-all sm:text-sm ${
-                    tab === t
+                    tab === t.id
                       ? "bg-sky text-navy"
                       : "text-cream/80 hover:bg-white/10 hover:text-cream"
                   }`}
                 >
-                  {t}
+                  {t.label}
                 </button>
               ))}
             </div>
@@ -86,16 +155,28 @@ export default function Hero() {
             <div className="grid grid-cols-1 gap-1.5 rounded-2xl bg-cream p-2 md:grid-cols-[1.4fr_1fr_1fr_auto]">
               <Field icon={<MapPin className="text-blue" />} label="Where to">
                 <input
+                  ref={destRef}
                   list="dest-list"
                   placeholder="Search a destination"
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                   className="w-full bg-transparent text-sm font-medium text-ink placeholder:text-ink/40 focus:outline-none"
                 />
                 <datalist id="dest-list">
-                  <option value="Bali, Indonesia" />
+                  <option value="Bali" />
                   <option value="Maldives" />
-                  <option value="Kashmir, India" />
-                  <option value="Dubai, UAE" />
+                  <option value="Kashmir" />
+                  <option value="Dubai" />
+                  <option value="Thailand" />
+                  <option value="Goa" />
+                  <option value="Kerala" />
+                  <option value="Rajasthan" />
+                  <option value="Uttarakhand" />
+                  <option value="Himachal Pradesh" />
+                  <option value="Vietnam" />
+                  <option value="Japan" />
                   <option value="Singapore" />
+                  <option value="Andaman" />
+                  <option value="Ladakh" />
                 </datalist>
               </Field>
 
@@ -124,7 +205,10 @@ export default function Hero() {
                 </select>
               </Field>
 
-              <button className="group flex items-center justify-center gap-2 rounded-xl bg-blue px-6 py-4 text-sm font-semibold text-cream transition-all hover:bg-blue-deep">
+              <button
+                onClick={handleSearch}
+                className="group flex items-center justify-center gap-2 rounded-xl bg-blue px-6 py-4 text-sm font-semibold text-cream transition-all hover:bg-blue-deep"
+              >
                 <Search className="h-4 w-4" />
                 <span>Search</span>
               </button>

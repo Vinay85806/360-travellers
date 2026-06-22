@@ -6,12 +6,15 @@ import PackagesSection from "@/components/PackagesSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
-export default function HomePage() {
+type Props = { searchParams: Promise<{ filter?: string }> };
+
+export default async function HomePage({ searchParams }: Props) {
+  const { filter } = await searchParams;
   return (
     <main className="overflow-x-hidden">
       <Navbar />
       <Hero />
-      <PackagesSection />
+      <PackagesSection filter={filter} />
       <Testimonials />
       <Footer />
     </main>
