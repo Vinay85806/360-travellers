@@ -10,11 +10,11 @@ const LOGO =
 
 
 const links = [
-  { label: "Destinations", href: "#destinations" },
-  { label: "Packages", href: "#packages" },
-  { label: "Experiences", href: "#packages" },
-  { label: "Reviews", href: "#testimonials" },
-  { label: "About", href: "#footer" },
+  { label: "Destinations", href: "/#destinations" },
+  { label: "Packages", href: "/#packages" },
+  { label: "Experiences", href: "/#packages" },
+  { label: "Reviews", href: "/#testimonials" },
+  { label: "About", href: "/#footer" },
 ];
 
 export default function Navbar() {
@@ -74,7 +74,7 @@ export default function Navbar() {
         {/* CTA + mobile toggle */}
         <div className="flex items-center gap-3">
           <Link
-            href="#search"
+            href="/#search"
             className="hidden rounded-full bg-blue px-5 py-2.5 text-sm font-semibold text-cream transition-all duration-300 hover:bg-blue-deep sm:inline-flex"
           >
             Plan My Trip
@@ -138,7 +138,7 @@ export default function Navbar() {
             ))}
           </ul>
           <Link
-            href="#search"
+            href="/#search"
             onClick={() => setOpen(false)}
             className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-blue px-6 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-blue-deep"
           >
