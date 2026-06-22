@@ -17,7 +17,7 @@ export const SPRITE2_URL = "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/
 export const SPRITE2_W = 1280;
 export const SPRITE2_H = 832;
 
-// ── Sprite 3 — international icons (Thailand, Bali, Maldives, Egypt …) ──────
+// ── Sprite 3 — international icons (Thailand, Bali, Maldives, Vietnam …) ────
 export const SPRITE3_URL = "https://fqrghsvqijxnglbrjhwo.supabase.co/storage/v1/object/public/images/icons/Gemini_Generated_Image_khifk2khifk2khif.png";
 export const SPRITE3_W = 1280;
 export const SPRITE3_H = 832;
@@ -57,7 +57,6 @@ export const DESTINATION_ICON_CROPS: Record<string, IconCrop> = {
   thailand:        { x: 69,  y: 30,  w: 180, h: 177, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },
   bali:            { x: 382, y: 25,  w: 198, h: 187, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },
   maldives:        { x: 694, y: 26,  w: 219, h: 184, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },
-  egypt:           { x: 1010,y: 36,  w: 221, h: 159, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },
   japan:           { x: 45,  y: 309, w: 231, h: 150, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },
   dubai:           { x: 404, y: 289, w: 148, h: 198, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },
   vietnam:         { x: 682, y: 308, w: 240, h: 175, sprite: SPRITE3_URL, spriteW: SPRITE3_W, spriteH: SPRITE3_H },

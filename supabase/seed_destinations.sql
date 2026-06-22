@@ -39,8 +39,7 @@ values
   ('Japan',       'japan',       null, null, 55),
   ('Switzerland', 'switzerland', null, null, 56),
   ('Paris',       'paris',       null, null, 57),
-  ('Egypt',       'egypt',       null, null, 58),
-  ('Maldives',    'maldives',    null, null, 59)
+  ('Maldives',    'maldives',    null, null, 58)
 on conflict (slug) do update set
   name        = excluded.name,
   icon_sprite = excluded.icon_sprite,

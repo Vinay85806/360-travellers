@@ -229,20 +229,6 @@ from (values
       {"day":6,"title":"Cannes","description":"Riviera leisure and seaside dining."},
       {"day":7,"title":"Departure","description":"Transfer to Nice airport."}
     ]'::jsonb
-  ),
-  (
-    'Egypt Pharaohs & Nile',
-    'Ancient pyramids, temple-lined riverbanks and a luxury Nile cruise through history.',
-    'international', 129999, '6 Nights / 7 Days', '/images/placeholder.svg',
-    '[
-      {"day":1,"title":"Arrive Cairo","description":"Evening at a Nile-side restaurant."},
-      {"day":2,"title":"Pyramids of Giza","description":"Great Pyramids, the Sphinx and the Egyptian Museum."},
-      {"day":3,"title":"Fly to Aswan","description":"High Dam and the Philae temple."},
-      {"day":4,"title":"Nile Cruise","description":"Sail to Kom Ombo and Edfu temples."},
-      {"day":5,"title":"Luxor East Bank","description":"Karnak and Luxor temples."},
-      {"day":6,"title":"Luxor West Bank","description":"Valley of the Kings and Hatshepsut temple."},
-      {"day":7,"title":"Departure","description":"Fly back via Cairo."}
-    ]'::jsonb
   )
 ) as v(title, description, category, price, duration, image_url, itinerary)
 where not exists (
