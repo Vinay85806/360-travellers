@@ -74,11 +74,11 @@ export default function Footer() {
 
             <div className="mt-6 space-y-2.5 text-sm text-cream/70">
               <a
-                href="tel:+919876543210"
+                href="tel:+918580610324"
                 className="flex items-center gap-2.5 transition-colors hover:text-gold-soft"
               >
                 <Phone className="h-4 w-4 text-gold-soft" />
-                +91 98765 43210
+                +91 85806 10324
               </a>
               <a
                 href="mailto:hello@360travellers.com"
